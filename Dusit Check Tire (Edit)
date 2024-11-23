@@ -84,12 +84,32 @@ function doPost(e) {
                         "type": "separator"
                       },
                       { 
-                        "type": "text",
-                        "text": "Update Data Last : "+Data4,
-                        "size": "xxs",
-                        "weight": "regular",
-                        "align": "end",
-                        "color": "#AAAAAA"
+                        "type": "box",
+                        "layout": "horizontal",
+                        "margin": "xxl",
+                        "contents": [
+                          {
+                            "type": "image",
+                            "url": "https://img5.pic.in.th/file/secure-sv1/Logo-Square.png",
+                            "margin": "none",
+                            "align": "start",
+                            "gravity": "center",
+                            "size": "xs",
+                            "aspectRatio": "16:9",
+                            "aspectMode": "cover"
+                          },
+                          { 
+                            "type": "text",
+                            "text": "สนใจเเจ้งเเอดมิน",
+                            "size": "xs",
+                            "color": "#AAAAAA",
+                            "align": "end",
+                            "gravity": "center",
+                            "margin": "none",
+                            "decoration": "underline",
+                            "contents": []
+                          }
+                        ]
                       }
                     ]
                   }
