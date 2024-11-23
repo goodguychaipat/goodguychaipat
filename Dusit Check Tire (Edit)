@@ -35,28 +35,42 @@ function doPost(e) {
                 "altText": "this is a flex message",
                 "contents": {
                   "type": "bubble",
+                    "hero": {
+                    "type": "image",
+                    "url": "https://img5.pic.in.th/file/secure-sv1/75824cd10dc80cc6a1172900ee108dbb.png",
+                    "margin": "sm",
+                    "align": "start",
+                    "gravity": "top",
+                    "size": "full",
+                    "aspectRatio": "30:9",
+                    "aspectMode": "fit",
+                    "backgroundColor": "#792020FF",
+                  },
                   "body": {
                     "type": "box",
                     "layout": "vertical",
-                    "spacing": "md",
+                    "spacing": "sm",
                     "contents": [
                       {
                         "type": "text",
-                        "text": ":: เช็คยาง ::",
+                        "text": "เบอร์ยาง",
                         "weight": "bold",
                         "align": "start",
                       },
                       {
                         "type": "text",
-                        "text": "เบอร์ยาง : "+  Name,
+                        "text": "  "+ Name,
                         "weight": "bold",
-                        "size": "xl",
+                        "size": "lg",
                         "align": "start",
                         "color": "#FF0000FF"
                       },
                       {
+                        "type": "separator"
+                      },
+                      {
                         "type": "text",
-                        "text": "รุ่นยาง : "+Data1+" ."
+                        "text": "รุ่นยาง : "+Data1
                       },
                       {
                         "type": "text",
@@ -72,7 +86,7 @@ function doPost(e) {
                       { 
                         "type": "text",
                         "text": "Update Data Last : "+Data4,
-                         "size": "xxs",
+                        "size": "xxs",
                         "weight": "regular",
                         "align": "end",
                         "color": "#AAAAAA"
@@ -113,5 +127,3 @@ function doPost(e) {
     return replyJSON;
   }
 }
-
-
