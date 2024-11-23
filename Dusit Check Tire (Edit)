@@ -73,8 +73,24 @@ function doPost(e) {
                         "text": "รุ่นยาง : "+Data1
                       },
                       {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "margin": "none",
+                        "contents": [
+                          {
                         "type": "text",
-                        "text": "จำนวนยาง : "+Data2+" เส้น"
+                        "text": "จำนวนยาง",
+                        "align": "start",
+                        "color": "#7F7F7F",
+                        "size": "sm",
+                          },
+                          { 
+                        "type": "text",
+                        "text": Data2+" เส้น",
+                        "align": "end",
+                        "size": "sm",
+                          }
+                        ]
                       },
                       {
                         "type": "box",
