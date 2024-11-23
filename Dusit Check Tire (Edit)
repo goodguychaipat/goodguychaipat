@@ -77,8 +77,24 @@ function doPost(e) {
                         "text": "จำนวนยาง : "+Data2+" เส้น"
                       },
                       {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "margin": "none",
+                        "contents": [
+                          {
                         "type": "text",
-                        "text": "ราคายาง : "+Data3+" บาท"
+                        "text": "ราคายาง",
+                        "align": "start",
+                        "color": "#7F7F7F",
+                        "size": "sm",
+                          },
+                          { 
+                        "type": "text",
+                        "text": Data3+" บาท",
+                        "align": "end",
+                        "size": "sm",
+                          }
+                        ]
                       },
                       {
                         "type": "separator"
@@ -86,7 +102,7 @@ function doPost(e) {
                       { 
                         "type": "box",
                         "layout": "horizontal",
-                        "margin": "xxl",
+                        "margin": "none",
                         "contents": [
                           {
                             "type": "image",
