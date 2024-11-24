@@ -69,8 +69,24 @@ function doPost(e) {
                         "type": "separator"
                       },
                       {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "margin": "none",
+                        "contents": [
+                          {
                         "type": "text",
-                        "text": "รุ่นยาง : "+Data1
+                        "text": "DOT",
+                        "align": "start",
+                        "color": "#7F7F7F",
+                        "size": "sm",
+                          },
+                          { 
+                        "type": "text",
+                        "text": Data1+" ",
+                        "align": "end",
+                        "size": "sm",
+                          }
+                        ]
                       },
                       {
                         "type": "box",
