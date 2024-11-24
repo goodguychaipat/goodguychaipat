@@ -75,6 +75,26 @@ function doPost(e) {
                         "contents": [
                           {
                         "type": "text",
+                        "text": "รุ่นยาง",
+                        "align": "start",
+                        "color": "#7F7F7F",
+                        "size": "sm",
+                          },
+                          { 
+                        "type": "text",
+                        "text": Data1+ " ( " +Data2+ " ) ",
+                        "align": "end",
+                        "size": "sm",
+                          }
+                        ]
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "margin": "none",
+                        "contents": [
+                          {
+                        "type": "text",
                         "text": "DOT",
                         "align": "start",
                         "color": "#7F7F7F",
