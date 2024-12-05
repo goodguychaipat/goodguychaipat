@@ -1,0 +1,106 @@
+var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1EabGMrOU_XI1NbPIVvOy5KrPIDb_OucTj8mIUQDF0r8/edit");
+var sheet = ss.getSheetByName("sheet1");
+
+function doPost(e) {              
+  var data = JSON.parse(e.postData.contents);
+  var userMsg = data.originalDetectIntentRequest.payload.data.message.text;
+  var values = sheet.getRange(2, 1, sheet.getLastRow() - 1, sheet.getLastColumn()).getValues();
+
+  var matches = []; // เก็บข้อมูลที่ตรงกับคำค้นหา
+
+  // ค้นหาข้อมูลที่ตรงกับคำค้นหา
+  for (var i = 0; i < values.length; i++) {
+    if (values[i][0] == userMsg) {
+      matches.push({
+        Name: values[i][1],
+        Data1: values[i][2],
+        Data2: values[i][3],
+        Data3: values[i][4],
+        Data4: values[i][5],
+        Data5: values[i][6]
+      });
+    }
+  }
+
+  // หากพบข้อมูลที่ตรงกับคำค้นหา
+  if (matches.length > 0) {
+    var flexContents = matches.map(function(match) {
+      return {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "md",
+        "contents": [
+          {
+            "type": "text",
+            "text": "เบอร์ยาง: " + match.Name,
+            "weight": "bold",
+            "color": "#FF0000"
+          },
+          {
+            "type": "text",
+            "text": "ยี่ห้อ: " + match.Data1
+          },
+          {
+            "type": "text",
+            "text": "รุ่นยาง: " + match.Data2 + " / " + match.Data3
+          },
+          {
+            "type": "text",
+            "text": "จำนวนยาง: " + match.Data4 + " เส้น"
+          },
+          {
+            "type": "text",
+            "text": "ราคายาง: " + match.Data5 + " บาท"
+          },
+          {
+            "type": "separator",
+            "margin": "md"
+          }
+        ]
+      };
+    });
+
+    var result = {
+      "fulfillmentMessages": [
+        {
+          "platform": "line",
+          "type": 4,
+          "payload": {
+            "line": {
+              "type": "flex",
+              "altText": "ข้อมูลที่ค้นหา",
+              "contents": {
+                "type": "bubble",
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": flexContents
+                }
+              }
+            }
+          }
+        }
+      ]
+    };
+
+    return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+  } else {
+    // กรณีไม่พบข้อมูล
+    var noDataResult = {
+      "fulfillmentMessages": [
+        {
+          "platform": "line",
+          "type": 4,
+          "payload": {
+            "line": {
+              "type": "text",
+              "text": "ไม่พบข้อมูลที่ค้นหา"
+            }
+          }
+        }
+      ]
+    };
+
+    return ContentService.createTextOutput(JSON.stringify(noDataResult)).setMimeType(ContentService.MimeType.JSON);
+  }
+}
