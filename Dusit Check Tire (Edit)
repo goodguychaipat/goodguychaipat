@@ -55,7 +55,7 @@ function doPost(e) {
                     "contents": [
                       {
                         "type": "text",
-                        "text": "ยาง",
+                        "text": "เบอร์ยาง",
                         "weight": "bold",
                         "align": "start",
                       },
@@ -104,7 +104,7 @@ function doPost(e) {
                           },
                           { 
                         "type": "text",
-                        "text": Data2+ " ( " +Data3+ " ) ",
+                        "text": Data2+ " / " +Data3,
                         "align": "end",
                         "size": "sm",
                           }
