@@ -73,7 +73,7 @@ function doPost(e) {
                       {
                         "type": "box",
                         "layout": "horizontal",
-                        "margin": "none",
+                        "margin": "sm",
                         "contents": [
                           {
                         "type": "text",
