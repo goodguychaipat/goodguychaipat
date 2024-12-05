@@ -4,7 +4,7 @@ var sheet = ss.getSheetByName("sheet1");
 function doPost(e) {              
   var data = JSON.parse(e.postData.contents);
   var userMsg = data.originalDetectIntentRequest.payload.data.message.text;
-  var values = sheet.getRange(2, 1, sheet.getLastRow() - 1, sheet.getLastColumn()).getValues();
+  var values = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn()).getValues();
 
   var matches = []; // เก็บข้อมูลที่ตรงกับคำค้นหา
 
@@ -22,13 +22,12 @@ function doPost(e) {
     }
   }
 
-  // หากพบข้อมูลที่ตรงกับคำค้นหา
   if (matches.length > 0) {
-    var flexContents = matches.map(function(match) {
+    var contents = matches.map(function(match) {
       return {
         "type": "box",
         "layout": "vertical",
-        "margin": "md",
+        "margin": "sm",
         "contents": [
           {
             "type": "text",
@@ -37,24 +36,83 @@ function doPost(e) {
             "color": "#FF0000"
           },
           {
-            "type": "text",
-            "text": "ยี่ห้อ: " + match.Data1
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "ยี่ห้อ",
+                "align": "start",
+                "color": "#7F7F7F",
+                "size": "sm"
+              },
+              {
+                "type": "text",
+                "text": match.Data1,
+                "align": "end",
+                "size": "sm"
+              }
+            ]
           },
           {
-            "type": "text",
-            "text": "รุ่นยาง: " + match.Data2 + " / " + match.Data3
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "รุ่นยาง",
+                "align": "start",
+                "color": "#7F7F7F",
+                "size": "sm"
+              },
+              {
+                "type": "text",
+                "text": match.Data2 + " / " + match.Data3,
+                "align": "end",
+                "size": "sm"
+              }
+            ]
           },
           {
-            "type": "text",
-            "text": "จำนวนยาง: " + match.Data4 + " เส้น"
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "จำนวนยาง",
+                "align": "start",
+                "color": "#7F7F7F",
+                "size": "sm"
+              },
+              {
+                "type": "text",
+                "text": match.Data4 + " เส้น",
+                "align": "end",
+                "size": "sm"
+              }
+            ]
           },
           {
-            "type": "text",
-            "text": "ราคายาง: " + match.Data5 + " บาท"
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "ราคายาง",
+                "align": "start",
+                "color": "#7F7F7F",
+                "size": "sm"
+              },
+              {
+                "type": "text",
+                "text": match.Data5 + " บาท",
+                "align": "end",
+                "size": "sm"
+              }
+            ]
           },
           {
-            "type": "separator",
-            "margin": "md"
+            "type": "separator"
           }
         ]
       };
@@ -71,10 +129,17 @@ function doPost(e) {
               "altText": "ข้อมูลที่ค้นหา",
               "contents": {
                 "type": "bubble",
+                "hero": {
+                  "type": "image",
+                  "url": "https://img5.pic.in.th/file/secure-sv1/75824cd10dc80cc6a1172900ee108dbb.png",
+                  "size": "full",
+                  "aspectRatio": "20:13",
+                  "aspectMode": "cover"
+                },
                 "body": {
                   "type": "box",
                   "layout": "vertical",
-                  "contents": flexContents
+                  "contents": contents
                 }
               }
             }
@@ -83,10 +148,12 @@ function doPost(e) {
       ]
     };
 
-    return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
-  } else {
-    // กรณีไม่พบข้อมูล
-    var noDataResult = {
+    var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+    return replyJSON;
+  }
+
+  if (!found) {
+    var result = {
       "fulfillmentMessages": [
         {
           "platform": "line",
@@ -94,13 +161,14 @@ function doPost(e) {
           "payload": {
             "line": {
               "type": "text",
-              "text": "ไม่พบข้อมูลที่ค้นหา"
+              "text": "ไม่พบยางในฐานข้อมูล"
             }
           }
         }
       ]
     };
 
-    return ContentService.createTextOutput(JSON.stringify(noDataResult)).setMimeType(ContentService.MimeType.JSON);
+    var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+    return replyJSON;
   }
 }
