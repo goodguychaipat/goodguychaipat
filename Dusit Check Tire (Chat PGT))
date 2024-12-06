@@ -126,7 +126,7 @@ function doPost(e) {
           "payload": {
             "line": {
               "type": "flex",
-              "altText": "ค้นหายาง",
+              "altText": "ค้นหายางเสร็จสิ้นค่ะ",
               "contents": {
                 "type": "bubble",
                 "hero": {
