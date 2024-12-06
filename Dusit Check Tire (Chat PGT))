@@ -1,4 +1,4 @@
-var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1EabGMrOU_XI1NbPIVvOy5KrPIDb_OucTj8mIUQDF0r8/edit");
+var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1EabGMrOU_XI1NbPIVvOy5KrPIDb_OucTj8mIUQDF0r8/edit"); 
 var sheet = ss.getSheetByName("sheet1");
 
 function doPost(e) {              
@@ -15,7 +15,7 @@ function doPost(e) {
         Name: values[i][1],
         Data1: values[i][2],
         Data2: values[i][3],
-        Data3: values[i][4],
+        Data3: Math.floor(values[i][4]), // ใช้ Math.floor() กับข้อมูลในคอลัมน์นี้
         Data4: values[i][5],
         Data5: values[i][6]
       });
@@ -105,7 +105,7 @@ function doPost(e) {
               },
               {
                 "type": "text",
-                "text": match.Data4 ,
+                "text": match.Data4,
                 "align": "end",
                 "size": "sm"
               }
@@ -126,7 +126,7 @@ function doPost(e) {
           "payload": {
             "line": {
               "type": "flex",
-              "altText": "ค้นหายางเสร็จสิ้นเเล้วค่ะ",
+              "altText": "ค้นหายาง",
               "contents": {
                 "type": "bubble",
                 "hero": {
