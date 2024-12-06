@@ -1,5 +1,5 @@
 var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1EabGMrOU_XI1NbPIVvOy5KrPIDb_OucTj8mIUQDF0r8/edit"); 
-var sheet = ss.getSheetByName("sheet1");
+var sheet = ss.getSheetByName("Match Data");
 
 function doPost(e) {              
   var data = JSON.parse(e.postData.contents);
@@ -126,7 +126,7 @@ function doPost(e) {
           "payload": {
             "line": {
               "type": "flex",
-              "altText": "ค้นหายางเสร็จสิ้นค่ะ",
+              "altText": "ค้นหายาง",
               "contents": {
                 "type": "bubble",
                 "hero": {
