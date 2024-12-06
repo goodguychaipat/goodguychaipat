@@ -67,26 +67,7 @@ function doPost(e) {
               },
               {
                 "type": "text",
-                "text": match.Data2 + " / " + match.Data3,
-                "align": "end",
-                "size": "sm"
-              }
-            ]
-          },
-          {
-            "type": "box",
-            "layout": "horizontal",
-            "contents": [
-              {
-                "type": "text",
-                "text": "จำนวนยาง",
-                "align": "start",
-                "color": "#7F7F7F",
-                "size": "sm"
-              },
-              {
-                "type": "text",
-                "text": match.Data4 + " เส้น",
+                "text": match.Data2,
                 "align": "end",
                 "size": "sm"
               }
@@ -105,7 +86,26 @@ function doPost(e) {
               },
               {
                 "type": "text",
-                "text": match.Data5 + " บาท",
+                "text": match.Data3 + " บาท",
+                "align": "end",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "หมายเหตุ",
+                "align": "start",
+                "color": "#7F7F7F",
+                "size": "sm"
+              },
+              {
+                "type": "text",
+                "text": match.Data4 ,
                 "align": "end",
                 "size": "sm"
               }
@@ -126,14 +126,14 @@ function doPost(e) {
           "payload": {
             "line": {
               "type": "flex",
-              "altText": "ข้อมูลที่ค้นหา",
+              "altText": "ค้นหายางเสร็จสิ้นเเล้วค่ะ",
               "contents": {
                 "type": "bubble",
                 "hero": {
                   "type": "image",
                   "url": "https://img5.pic.in.th/file/secure-sv1/75824cd10dc80cc6a1172900ee108dbb.png",
                   "size": "full",
-                  "aspectRatio": "20:13",
+                  "aspectRatio": "30:9",
                   "aspectMode": "cover"
                 },
                 "body": {
