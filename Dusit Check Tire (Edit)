@@ -1,3 +1,4 @@
+// @ts-nocheck
 var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1EabGMrOU_XI1NbPIVvOy5KrPIDb_OucTj8mIUQDF0r8/edit");
 var sheet = ss.getSheetByName("Match Data");
 
@@ -114,7 +115,8 @@ function doPost(e) {
             ]
           },
           {
-            "type": "separator"
+            "type": "separator",
+            "margin": "md",
           }
         ]
       };
@@ -134,7 +136,7 @@ function doPost(e) {
         },
         {
          "type": "text",
-         "text": tireName,
+         "text": "  " + tireName,
          "weight": "bold",
          "size": "xxl",
          "align": "start",
