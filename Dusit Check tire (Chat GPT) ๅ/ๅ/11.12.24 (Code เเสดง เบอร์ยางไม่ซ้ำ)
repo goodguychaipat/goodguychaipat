@@ -1,4 +1,4 @@
-var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1EabGMrOU_XI1NbPIVvOy5KrPIDb_OucTj8mIUQDF0r8/edit"); 
+var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1EabGMrOU_XI1NbPIVvOy5KrPIDb_OucTj8mIUQDF0r8/edit");
 var sheet = ss.getSheetByName("Match Data");
 
 function doPost(e) {              
@@ -131,7 +131,7 @@ function doPost(e) {
           "color": "#FF0000",
           "size": "xl",
           "align": "center",
-          "decoration": "underline",
+          "decoration": "underline"
         },
         ...details // แสดงข้อมูลที่จัดกลุ่มตามเบอร์ยาง
       ]
@@ -162,6 +162,28 @@ function doPost(e) {
                   "layout": "vertical",
                   "spacing": "md",
                   "contents": contents
+                },
+                "footer": {
+                  "type": "box",
+                  "layout": "horizontal",
+                  "contents": [
+                    {
+                      "type": "image",
+                      "url": "https://img5.pic.in.th/file/secure-sv1/Logo-Square.png",
+                      "size": "xs",
+                      "margin": "xs",
+                      "align": "start",
+                      "aspectMode": "cover"
+                    },
+                    {
+                      "type": "text",
+                      "text": "สนใจยางติดต่อเเอดมิน",
+                      "align": "end",
+                      "gravity": "center",
+                      "size": "xs",
+                      "color": "#7F7F7F"
+                    }
+                  ]
                 }
               }
             }
