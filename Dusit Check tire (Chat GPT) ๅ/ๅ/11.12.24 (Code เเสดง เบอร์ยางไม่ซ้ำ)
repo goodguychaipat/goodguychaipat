@@ -1,3 +1,4 @@
+// @ts-nocheck
 var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1EabGMrOU_XI1NbPIVvOy5KrPIDb_OucTj8mIUQDF0r8/edit");
 var sheet = ss.getSheetByName("Match Data");
 
@@ -34,6 +35,8 @@ function doPost(e) {
         "type": "box",
         "layout": "vertical",
         "margin": "md",
+        "paddingBottom": "xs",
+        "paddingTop": "xs",
         "contents": [
           {
             "type": "box",
@@ -114,29 +117,50 @@ function doPost(e) {
             ]
           },
           {
-            "type": "separator"
+            "type": "separator",
+            "margin": "md",
           }
         ]
       };
     });
 
     contents.push({
-      "type": "box",
-      "layout": "vertical",
-      "spacing": "md",
-      "contents": [
+         "type": "box",
+         "layout": "vertical",
+         "margin": "md",
+         "paddingTop": "xs",
+         "contents": [
+        {
+         "type": "box",
+         "layout": "vertical",
+         "spacing": "sm",
+         "contents": [
         {
           "type": "text",
-          "text": "เบอร์ยาง " + tireName,
-          "weight": "bold",
-          "color": "#FF0000",
-          "size": "xl",
-          "align": "center",
-          "decoration": "underline"
+          "text": "เบอร์ยางที่ท่านค้นหา",
+          "weight": "regular",
+          "align": "start",
+          "size": "sm",
+          "color": "#7F7F7F"
         },
-        ...details // แสดงข้อมูลที่จัดกลุ่มตามเบอร์ยาง
-      ]
-    });
+         {
+           "type": "text",
+           "text": tireName,
+           "weight": "bold",
+           "size": "3xl",
+           "align": "center",
+           "color": "#FF0000FF"
+         }
+       ]
+     },
+    {
+      "type": "separator",
+      "margin": "md"
+    },
+    ...details // แสดงข้อมูลที่จัดกลุ่มตามเบอร์ยาง
+  ]
+});
+
   }
 
   if (contents.length > 0) {
@@ -148,7 +172,7 @@ function doPost(e) {
           "payload": {
             "line": {
               "type": "flex",
-              "altText": "ค้นหายางเสร็จเเล้วครับ",
+              "altText": "ค้นหายางเบอร์ " + tireName + " เสร็จเเล้วครับ",
               "contents": {
                 "type": "bubble",
                 "hero": {
@@ -168,22 +192,25 @@ function doPost(e) {
                   "type": "box",
                   "layout": "horizontal",
                   "spacing": "xs",
+                  "paddingAll": "xs", // ลด padding รอบ footer ทั้งหมด
                   "contents": [
                     {
                       "type": "text",
-                      "text": "สนใจยางโปรดติดต่อเเอดมิน",
+                      "text": "สนใจติดต่อเเอดมิน",
                       "align": "start",
                       "gravity": "center",
-                      "margin": "lg",
+                      "margin": "xl",
                       "size": "xs",
-                      "color": "#7F7F7F"
+                      "color": "#7F7F7F",
+                      "decoration": "underline"
                     },
                     {
                       "type": "image",
                       "url": "https://img5.pic.in.th/file/secure-sv1/Logo-Square.png",
-                      "size": "xs",
-                      "margin": "xs",
+                      "size": "sm",
+                      "margin": "md",
                       "align": "end",
+                      "aspectRatio": "10:7",
                       "aspectMode": "cover"
                     }
                   ]
