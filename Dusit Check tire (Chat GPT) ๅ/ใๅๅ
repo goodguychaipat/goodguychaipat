@@ -1,0 +1,189 @@
+var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1EabGMrOU_XI1NbPIVvOy5KrPIDb_OucTj8mIUQDF0r8/edit"); 
+var sheet = ss.getSheetByName("Match Data");
+
+function doPost(e) {              
+  var data = JSON.parse(e.postData.contents);
+  var userMsg = data.originalDetectIntentRequest.payload.data.message.text;
+  var values = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn()).getValues();
+
+  var groupedData = {}; // จัดกลุ่มข้อมูลตามเบอร์ยาง
+
+  // ค้นหาข้อมูลที่ตรงกับคำค้นหาและจัดกลุ่ม
+  for (var i = 0; i < values.length; i++) {
+    if (values[i][0] == userMsg) {
+      var tireName = values[i][1];
+      if (!groupedData[tireName]) {
+        groupedData[tireName] = [];
+      }
+      groupedData[tireName].push({
+        Data1: values[i][2], // ยี่ห้อ
+        Data2: values[i][3], // รุ่นยาง
+        Data3: Math.floor(values[i][4]), // ราคาเงินสด
+        Data4: values[i][5], // หมายเหตุ
+        Data5: values[i][6]  // ข้อมูลอื่นๆ
+      });
+    }
+  }
+
+  var contents = [];
+
+  // สร้าง Box สำหรับแต่ละเบอร์ยาง
+  for (var tireName in groupedData) {
+    var details = groupedData[tireName].map(function(detail) {
+      return {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "ยี่ห้อ",
+                "align": "start",
+                "color": "#7F7F7F",
+                "size": "sm"
+              },
+              {
+                "type": "text",
+                "text": detail.Data1,
+                "align": "end",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "รุ่นยาง",
+                "align": "start",
+                "color": "#7F7F7F",
+                "size": "sm"
+              },
+              {
+                "type": "text",
+                "text": detail.Data2,
+                "align": "end",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "ราคายาง",
+                "align": "start",
+                "color": "#7F7F7F",
+                "size": "sm"
+              },
+              {
+                "type": "text",
+                "text": detail.Data3 + " บาท",
+                "align": "end",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "หมายเหตุ",
+                "align": "start",
+                "color": "#7F7F7F",
+                "size": "sm"
+              },
+              {
+                "type": "text",
+                "text": detail.Data4,
+                "align": "end",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "type": "separator"
+          }
+        ]
+      };
+    });
+
+    contents.push({
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "เบอร์ยาง: " + tireName,
+          "weight": "bold",
+          "color": "#FF0000",
+          "size": "md"
+        },
+        ...details // แสดงข้อมูลที่จัดกลุ่มตามเบอร์ยาง
+      ]
+    });
+  }
+
+  if (contents.length > 0) {
+    var result = {
+      "fulfillmentMessages": [
+        {
+          "platform": "line",
+          "type": 4,
+          "payload": {
+            "line": {
+              "type": "flex",
+              "altText": "ค้นหายาง",
+              "contents": {
+                "type": "bubble",
+                "hero": {
+                  "type": "image",
+                  "url": "https://img5.pic.in.th/file/secure-sv1/75824cd10dc80cc6a1172900ee108dbb.png",
+                  "size": "full",
+                  "aspectRatio": "30:9",
+                  "aspectMode": "cover"
+                },
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": contents
+                }
+              }
+            }
+          }
+        }
+      ]
+    };
+
+    var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+    return replyJSON;
+  }
+
+  var result = {
+    "fulfillmentMessages": [
+      {
+        "platform": "line",
+        "type": 4,
+        "payload": {
+          "line": {
+            "type": "text",
+            "text": "ไม่พบยางในฐานข้อมูล"
+          }
+        }
+      }
+    ]
+  };
+
+  var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+  return replyJSON;
+}
