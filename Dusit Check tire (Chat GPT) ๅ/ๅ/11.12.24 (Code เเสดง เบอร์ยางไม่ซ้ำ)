@@ -33,7 +33,7 @@ function doPost(e) {
       return {
         "type": "box",
         "layout": "vertical",
-        "margin": "sm",
+        "margin": "md",
         "contents": [
           {
             "type": "box",
@@ -123,6 +123,7 @@ function doPost(e) {
     contents.push({
       "type": "box",
       "layout": "vertical",
+      "spacing": "md",
       "contents": [
         {
           "type": "text",
@@ -160,28 +161,30 @@ function doPost(e) {
                 "body": {
                   "type": "box",
                   "layout": "vertical",
-                  "spacing": "md",
+                  "spacing": "xs",
                   "contents": contents
                 },
                 "footer": {
                   "type": "box",
                   "layout": "horizontal",
+                  "spacing": "xs",
                   "contents": [
+                    {
+                      "type": "text",
+                      "text": "สนใจยางโปรดติดต่อเเอดมิน",
+                      "align": "start",
+                      "gravity": "center",
+                      "margin": "lg",
+                      "size": "xs",
+                      "color": "#7F7F7F"
+                    },
                     {
                       "type": "image",
                       "url": "https://img5.pic.in.th/file/secure-sv1/Logo-Square.png",
                       "size": "xs",
                       "margin": "xs",
-                      "align": "start",
-                      "aspectMode": "cover"
-                    },
-                    {
-                      "type": "text",
-                      "text": "สนใจยางติดต่อเเอดมิน",
                       "align": "end",
-                      "gravity": "center",
-                      "size": "xs",
-                      "color": "#7F7F7F"
+                      "aspectMode": "cover"
                     }
                   ]
                 }
