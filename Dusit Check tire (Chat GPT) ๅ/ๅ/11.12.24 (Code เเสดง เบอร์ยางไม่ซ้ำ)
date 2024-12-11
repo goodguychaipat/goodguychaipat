@@ -50,6 +50,8 @@ function doPost(e) {
                 "type": "text",
                 "text": detail.Data1,
                 "align": "end",
+                "weight": "bold",
+                "color": "#FF0000",
                 "size": "sm"
               }
             ]
@@ -124,10 +126,12 @@ function doPost(e) {
       "contents": [
         {
           "type": "text",
-          "text": "เบอร์ยาง: " + tireName,
+          "text": "เบอร์ยาง " + tireName,
           "weight": "bold",
           "color": "#FF0000",
-          "size": "md"
+          "size": "xl",
+          "align": "center",
+          "decoration": "underline",
         },
         ...details // แสดงข้อมูลที่จัดกลุ่มตามเบอร์ยาง
       ]
@@ -143,7 +147,7 @@ function doPost(e) {
           "payload": {
             "line": {
               "type": "flex",
-              "altText": "ค้นหายาง",
+              "altText": "ค้นหายางเสร็จเเล้วครับ",
               "contents": {
                 "type": "bubble",
                 "hero": {
@@ -156,6 +160,7 @@ function doPost(e) {
                 "body": {
                   "type": "box",
                   "layout": "vertical",
+                  "spacing": "md",
                   "contents": contents
                 }
               }
