@@ -1,0 +1,198 @@
+// @ts-nocheck
+var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1EabGMrOU_XI1NbPIVvOy5KrPIDb_OucTj8mIUQDF0r8/edit");
+var sheet = ss.getSheetByName("Match Data (Message API)");
+
+function doPost(e) {              
+  var data = JSON.parse(e.postData.contents);
+  var userMsg = data.originalDetectIntentRequest.payload.data.message.text;
+  var values = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn()).getValues();
+
+  var groupedData = {}; // จัดกลุ่มข้อมูลตามเบอร์ยาง
+
+  // ค้นหาข้อมูลที่ตรงกับคำค้นหาและจัดกลุ่ม
+  for (var i = 0; i < values.length; i++) {
+    if (values[i][0] == userMsg) {
+      var tireName = values[i][2];
+      if (!groupedData[tireName]) {
+        groupedData[tireName] = [];
+      }
+      groupedData[tireName].push({
+        Data1: values[i][2], // ยี่ห้อ
+        Data2: values[i][3], // รุ่นยาง
+        Data3: Math.floor(values[i][4]), // ราคาเงินสด
+        Data4: values[i][5], // Dot ยาง
+        Data5: values[i][6],  // จำนวนยาง
+        Data6: values[i][7]  // หมายเหตุ
+      });
+    }
+  }
+
+  var contents = [];
+
+  // สร้าง Box สำหรับแต่ละเบอร์ยาง
+  for (var tireName in groupedData) {
+    var details = groupedData[tireName].map(function(detail) {
+      return {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "md",
+        "paddingBottom": "xs",
+        "paddingTop": "xs",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": detail.Data2,
+                "weight": "bold",
+                "align": "start",
+                "size": "md"
+              },
+              {
+                "type": "text",
+                "text": detail.Data6,
+                "align": "end",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "(" +detail.Data4 + ")" +detail.Data5 + " เส้น",
+                "align": "start",
+                "size": "sm"
+              },
+              {
+                "type": "text",
+                "text": detail.Data3 + " บาท",
+                "align": "end",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "type": "separator",
+            "margin": "md",
+          }
+        ]
+      };
+    });
+
+    contents.push({
+         "type": "box",
+         "layout": "vertical",
+         "margin": "md",
+         "paddingTop": "xs",
+         "contents": [
+        {
+         "type": "box",
+         "layout": "vertical",
+         "spacing": "sm",
+         "contents": [
+         {
+           "type": "text",
+           "text": tireName,
+           "weight": "bold",
+           "size": "xl",
+           "align": "start",
+           "color": "#FF0000FF"
+         }
+       ]
+     },
+    {
+      "type": "separator",
+      "margin": "md"
+    },
+    ...details // แสดงข้อมูลที่จัดกลุ่มตามเบอร์ยาง
+  ]
+});
+
+  }
+
+  if (contents.length > 0) {
+    var result = {
+      "fulfillmentMessages": [
+        {
+          "platform": "line",
+          "type": 4,
+          "payload": {
+            "line": {
+              "type": "flex",
+              "altText": "ค้นหายางเบอร์ " + userMsg + " เสร็จเเล้วครับ",
+              "contents": {
+                "type": "bubble",
+                "hero": {
+                  "type": "image",
+                  "url": "https://img5.pic.in.th/file/secure-sv1/75824cd10dc80cc6a1172900ee108dbb.png",
+                  "size": "full",
+                  "aspectRatio": "30:9",
+                  "aspectMode": "cover"
+                },
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "spacing": "xs",
+                  "contents": contents
+                },
+                "footer": {
+                  "type": "box",
+                  "layout": "horizontal",
+                  "spacing": "xs",
+                  "paddingAll": "xs", // ลด padding รอบ footer ทั้งหมด
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "สนใจติดต่อเเอดมิน",
+                      "align": "start",
+                      "gravity": "center",
+                      "margin": "xl",
+                      "size": "xs",
+                      "color": "#7F7F7F",
+                      "decoration": "underline"
+                    },
+                    {
+                      "type": "image",
+                      "url": "https://img5.pic.in.th/file/secure-sv1/Logo-Square.png",
+                      "size": "sm",
+                      "margin": "md",
+                      "align": "end",
+                      "aspectRatio": "10:7",
+                      "aspectMode": "cover"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    };
+
+    var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+    return replyJSON;
+  }
+
+  var result = {
+    "fulfillmentMessages": [
+      {
+        "platform": "line",
+        "type": 4,
+        "payload": {
+          "line": {
+            "type": "text",
+            "text": "⚠️ ไม่พบเบอร์ยาง " + userMsg +"⚠️\n" + "." + "\nรบกวนพิมพ์ D เเล้วตามด้วยเลขยางที่ท่านต้องการทราบอีกครั้งครับ\n" +"\.\n"+ "\ขอบคุณครับ"
+          }
+        }
+      }
+    ]
+  };
+
+  var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+  return replyJSON;
+}
