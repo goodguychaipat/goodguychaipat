@@ -19,10 +19,10 @@ function doPost(e) {
       groupedData[tireName].push({
         Data1: values[i][2], // ยี่ห้อ
         Data2: values[i][3], // รุ่นยาง
-        Data3: Math.floor(values[i][4]), // ราคาเงินสด
-        Data4: values[i][5], // หมายเหตุ
-        Data5: values[i][6],  // ข้อมูลอื่นๆ
-        Data6: values[i][7]  // ข้อมูลอื่นๆ
+        Data3: values[i][4], // หมายเหตุ
+        Data4: values[i][5], // Dot ยาง
+        Data5: values[i][6], // จำนวนยาง
+        Data6: values[i][7]  // ราคา
       });
     }
   }
@@ -66,14 +66,14 @@ function doPost(e) {
             "contents": [
               {
                 "type": "text",
-                "text": "รุ่นยาง",
+                "text": "ราคายาง",
                 "align": "start",
                 "color": "#7F7F7F",
                 "size": "sm"
               },
               {
                 "type": "text",
-                "text": detail.Data2,
+                "text": detail.Data3 + " บาท",
                 "align": "end",
                 "size": "sm"
               }
