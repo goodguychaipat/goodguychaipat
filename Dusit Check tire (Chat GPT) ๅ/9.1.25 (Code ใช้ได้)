@@ -17,7 +17,7 @@ function doPost(e) {
         groupedData[tireName] = [];
       }
       groupedData[tireName].push({
-        Data1: values[i][2], // ยี่ห้อ
+        Data1: values[i][1], // ยี่ห้อ
         Data2: values[i][3], // รุ่นยาง
         Data3: Math.floor(values[i][4]), // ราคา
         Data4: values[i][5], // Dot ยาง
@@ -165,7 +165,7 @@ function doPost(e) {
           "payload": {
             "line": {
               "type": "flex",
-              "altText": "ค้นหายางเบอร์ " + tireName + " เสร็จเเล้วครับ",
+              "altText": "ค้นหายางเบอร์ " + userMsg + " เสร็จเเล้วครับ",
               "contents": {
                 "type": "bubble",
                 "hero": {
