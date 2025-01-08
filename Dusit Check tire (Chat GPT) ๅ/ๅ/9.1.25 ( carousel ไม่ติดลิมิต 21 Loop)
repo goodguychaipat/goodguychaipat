@@ -58,7 +58,7 @@ function doPost(e) {
               },
               {
                 "type": "text",
-                "text": detail.Data2,
+                "text": detail. Data2 ,
                 "align": "end",
                 "weight": "bold",
                 "color": "#FF0000",
@@ -97,6 +97,25 @@ function doPost(e) {
               {
                 "type": "text",
                 "text": "(" + detail.Data4 + ") " + detail.Data5,
+                "align": "end",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "หมายเหตุ",
+                "align": "start",
+                "color": "#7F7F7F",
+                "size": "sm"
+              },
+              {
+                "type": "text",
+                "text": detail.Data6 ? detail.Data6 : "-",
                 "align": "end",
                 "size": "sm"
               }
@@ -215,3 +234,4 @@ function doPost(e) {
   var replyJSON = ContentService.createTextOutput(JSON.stringify(noResult)).setMimeType(ContentService.MimeType.JSON);
   return replyJSON;
 }
+
