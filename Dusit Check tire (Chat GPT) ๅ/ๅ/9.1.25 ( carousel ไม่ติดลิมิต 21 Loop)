@@ -115,6 +115,13 @@ function doPost(e) {
     chunkedDetails.forEach((chunk) => {
       bubbles.push({
         "type": "bubble",
+        "hero": {
+          "type": "image",
+          "url": "https://img5.pic.in.th/file/secure-sv1/75824cd10dc80cc6a1172900ee108dbb.png",
+          "size": "full",
+          "aspectRatio": "30:9",
+          "aspectMode": "cover"
+        },
         "body": {
           "type": "box",
           "layout": "vertical",
@@ -133,6 +140,33 @@ function doPost(e) {
             },
             ...chunk
           ]
+        },
+        "footer": {
+          "type": "box",
+          "layout": "horizontal",
+          "spacing": "xs",
+          "paddingAll": "xs",
+          "contents": [
+            {
+              "type": "text",
+              "text": "สนใจติดต่อเเอดมิน",
+              "align": "start",
+              "gravity": "center",
+              "margin": "xl",
+              "size": "xs",
+              "color": "#7F7F7F",
+              "decoration": "underline"
+            },
+            {
+              "type": "image",
+              "url": "https://img5.pic.in.th/file/secure-sv1/Logo-Square.png",
+              "size": "sm",
+              "margin": "md",
+              "align": "end",
+              "aspectRatio": "10:7",
+              "aspectMode": "cover"
+            }
+          ]
         }
       });
     });
@@ -147,7 +181,7 @@ function doPost(e) {
           "payload": {
             "line": {
               "type": "flex",
-              "altText": "ผลการค้นหายาง " + userMsg,
+              "altText": "ค้นหายาง " + userMsg + " เสร็จเเล้วครับ",
               "contents": {
                 "type": "carousel",
                 "contents": bubbles
