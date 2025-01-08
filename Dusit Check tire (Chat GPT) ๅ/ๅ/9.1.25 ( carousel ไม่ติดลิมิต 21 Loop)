@@ -1,0 +1,183 @@
+// @ts-nocheck
+var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1EabGMrOU_XI1NbPIVvOy5KrPIDb_OucTj8mIUQDF0r8/edit");
+var sheet = ss.getSheetByName("Match Data (Message API)");
+
+function doPost(e) {
+  var data = JSON.parse(e.postData.contents);
+  var userMsg = data.originalDetectIntentRequest.payload.data.message.text;
+  var values = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn()).getValues();
+
+  var groupedData = {}; // จัดกลุ่มข้อมูลตามเบอร์ยาง
+
+  // ค้นหาข้อมูลที่ตรงกับคำค้นหาและจัดกลุ่ม
+  for (var i = 0; i < values.length; i++) {
+    if (values[i][0] == userMsg) {
+      var tireName = values[i][2];
+      if (!groupedData[tireName]) {
+        groupedData[tireName] = [];
+      }
+      groupedData[tireName].push({
+        Data1: values[i][1], // ยี่ห้อ
+        Data2: values[i][3], // รุ่นยาง
+        Data3: Math.floor(values[i][4]), // ราคา
+        Data4: values[i][5], // Dot ยาง
+        Data5: values[i][6], // จำนวนยาง
+        Data6: values[i][7]  // หมายเหตุ
+      });
+    }
+  }
+
+  var bubbles = [];
+
+  // ฟังก์ชันแบ่งข้อมูลเป็นกลุ่ม (chunk)
+  function chunkArray(array, size) {
+    var result = [];
+    for (var i = 0; i < array.length; i += size) {
+      result.push(array.slice(i, i + size));
+    }
+    return result;
+  }
+
+  // สร้าง Bubble สำหรับแต่ละกลุ่ม
+  for (var tireName in groupedData) {
+    var details = groupedData[tireName].map(function (detail) {
+      return {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "md",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "รุ่นยาง",
+                "size": "sm",
+                "color": "#7F7F7F"
+              },
+              {
+                "type": "text",
+                "text": detail.Data2,
+                "align": "end",
+                "weight": "bold",
+                "color": "#FF0000",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "ราคายาง",
+                "size": "sm",
+                "color": "#7F7F7F"
+              },
+              {
+                "type": "text",
+                "text": detail.Data3 + " บาท",
+                "align": "end",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "จำนวนยาง",
+                "size": "sm",
+                "color": "#7F7F7F"
+              },
+              {
+                "type": "text",
+                "text": "(" + detail.Data4 + ") " + detail.Data5,
+                "align": "end",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "type": "separator",
+            "margin": "md"
+          }
+        ]
+      };
+    });
+
+    // แบ่งข้อมูลเป็นกลุ่มย่อย
+    var chunkedDetails = chunkArray(details, 7);
+    chunkedDetails.forEach((chunk) => {
+      bubbles.push({
+        "type": "bubble",
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": tireName,
+              "weight": "bold",
+              "size": "xl",
+              "align": "center",
+              "color": "#FF0000FF"
+            },
+            {
+              "type": "separator",
+              "margin": "md"
+            },
+            ...chunk
+          ]
+        }
+      });
+    });
+  }
+
+  if (bubbles.length > 0) {
+    var result = {
+      "fulfillmentMessages": [
+        {
+          "platform": "line",
+          "type": 4,
+          "payload": {
+            "line": {
+              "type": "flex",
+              "altText": "ผลการค้นหายาง " + userMsg,
+              "contents": {
+                "type": "carousel",
+                "contents": bubbles
+              }
+            }
+          }
+        }
+      ]
+    };
+
+    var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+    return replyJSON;
+  }
+
+  // กรณีไม่พบข้อมูล
+  var noResult = {
+    "fulfillmentMessages": [
+      {
+        "platform": "line",
+        "type": 4,
+        "payload": {
+          "line": {
+            "type": "text",
+            "text": "⚠️ ไม่พบข้อมูลยางสำหรับคำค้น \"" + userMsg + "\" ⚠️\nกรุณาลองใหม่อีกครั้งครับ"
+          }
+        }
+      }
+    ]
+  };
+
+  var replyJSON = ContentService.createTextOutput(JSON.stringify(noResult)).setMimeType(ContentService.MimeType.JSON);
+  return replyJSON;
+}
