@@ -44,14 +44,14 @@ function doPost(e) {
             "contents": [
               {
                 "type": "text",
-                "text": "ยี่ห้อ",
+                "text": "รุ่นยาง",
                 "align": "start",
                 "color": "#7F7F7F",
                 "size": "sm"
               },
               {
                 "type": "text",
-                "text": detail.Data1,
+                "text": detail.Data2,
                 "align": "end",
                 "weight": "bold",
                 "color": "#FF0000",
