@@ -12,7 +12,7 @@ function doPost(e) {
   // ค้นหาข้อมูลที่ตรงกับคำค้นหาและจัดกลุ่ม
   for (var i = 0; i < values.length; i++) {
     if (values[i][0] == userMsg) {
-      var tireName = values[i][1];
+      var tireName = values[i][2];
       if (!groupedData[tireName]) {
         groupedData[tireName] = [];
       }
@@ -135,19 +135,11 @@ function doPost(e) {
          "layout": "vertical",
          "spacing": "sm",
          "contents": [
-        {
-          "type": "text",
-          "text": "เบอร์ยางที่ท่านค้นหา",
-          "weight": "regular",
-          "align": "start",
-          "size": "sm",
-          "color": "#7F7F7F"
-        },
          {
            "type": "text",
            "text": tireName,
            "weight": "bold",
-           "size": "3xl",
+           "size": "xl",
            "align": "center",
            "color": "#FF0000FF"
          }
