@@ -19,10 +19,10 @@ function doPost(e) {
       groupedData[tireName].push({
         Data1: values[i][2], // ยี่ห้อ
         Data2: values[i][3], // รุ่นยาง
-        Data3: values[i][4], // หมายเหตุ
+        Data3: Math.floor(values[i][4]), // ราคา
         Data4: values[i][5], // Dot ยาง
         Data5: values[i][6], // จำนวนยาง
-        Data6: values[i][7]  // ราคา
+        Data6: values[i][7]  // หมายเหตุ
       });
     }
   }
@@ -111,7 +111,7 @@ function doPost(e) {
               },
               {
                 "type": "text",
-                "text": detail.Data4,
+                "text": detail.Data6,
                 "align": "end",
                 "size": "sm"
               }
