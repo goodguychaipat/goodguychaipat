@@ -214,24 +214,24 @@ function doPost(e) {
     var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
     return replyJSON;
   }
-
   // กรณีไม่พบข้อมูล
-  var noResult = {
-    "fulfillmentMessages": [
-      {
-        "platform": "line",
-        "type": 4,
-        "payload": {
-          "line": {
-            "type": "text",
-            "text": "⚠️ ไม่พบข้อมูลยางสำหรับคำค้น \"" + userMsg + "\" ⚠️\nกรุณาลองใหม่อีกครั้งครับ"
+  if (/^D\d+$/.test(userMsg)) { // ตรวจสอบว่า userMsg อยู่ในรูปแบบ "Dxxxxx" (x เป็นตัวเลข)
+    var noResult = {
+      "fulfillmentMessages": [
+        {
+          "platform": "line",
+          "type": 4,
+          "payload": {
+            "line": {
+              "type": "text",
+              "text": "⚠️ ไม่พบข้อมูลยางสำหรับหมายเลข \"" + userMsg + "\" ⚠️\nกรุณาลองใหม่อีกครั้งครับ"
+            }
           }
         }
-      }
-    ]
-  };
+      ]
+    };
 
-  var replyJSON = ContentService.createTextOutput(JSON.stringify(noResult)).setMimeType(ContentService.MimeType.JSON);
-  return replyJSON;
-}
-
+    var replyJSON = ContentService.createTextOutput(JSON.stringify(noResult)).setMimeType(ContentService.MimeType.JSON);
+    return replyJSON;
+  }
+  }
