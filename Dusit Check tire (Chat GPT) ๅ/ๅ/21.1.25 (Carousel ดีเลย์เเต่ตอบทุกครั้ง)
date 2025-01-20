@@ -125,6 +125,33 @@ function doPost(e) {
             { "type": "separator", "margin": "md" },
             ...chunk
           ]
+        },
+        "footer": { // เพิ่ม Footer
+          "type": "box",
+          "layout": "horizontal",
+          "spacing": "xs",
+          "paddingAll": "xs",
+          "contents": [
+            {
+              "type": "text",
+              "text": "สนใจติดต่อเเอดมิน",
+              "align": "start",
+              "gravity": "center",
+              "margin": "xl",
+              "size": "xs",
+              "color": "#7F7F7F",
+              "decoration": "underline"
+            },
+            {
+              "type": "image",
+              "url": "https://img5.pic.in.th/file/secure-sv1/Logo-Square.png",
+              "size": "sm",
+              "margin": "md",
+              "align": "end",
+              "aspectRatio": "10:7",
+              "aspectMode": "cover"
+            }
+          ]
         }
       });
     });
