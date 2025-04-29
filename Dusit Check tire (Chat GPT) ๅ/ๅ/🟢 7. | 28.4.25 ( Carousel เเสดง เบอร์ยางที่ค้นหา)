@@ -110,7 +110,7 @@ function doPost(e) {
       "contents": [
         {
           "type": "image",
-          "url": "https://img2.pic.in.th/pic/Cover-182312edeb9a59412.png",
+          "url": "https://img5.pic.in.th/file/secure-sv1/Cover-1-Use55b3b7a7bd7e8764.png",
           "gravity": "top",
           "size": "full",
           "aspectRatio": "3:1",
@@ -130,7 +130,6 @@ function doPost(e) {
           "color": "#FFFFFFFF",
           "margin": "md",
           "size": "3xl",
-          "offsetTop": "20%"
         }
       ]
     },
