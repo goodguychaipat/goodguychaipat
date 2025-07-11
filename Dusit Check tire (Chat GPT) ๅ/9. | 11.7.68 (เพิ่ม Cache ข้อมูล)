@@ -1,0 +1,222 @@
+// @ts-nocheck
+var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1EabGMrOU_XI1NbPIVvOy5KrPIDb_OucTj8mIUQDF0r8/edit");
+var sheet = ss.getSheetByName("Match Data (Message API)");
+
+function doPost(e) {
+  var data = JSON.parse(e.postData.contents);
+  var userMsg = data.originalDetectIntentRequest.payload.data.message.text;
+
+  // ✅✅ เพิ่มระบบ Script Cache (All User - 6 ชั่วโมง)
+  var cache = CacheService.getScriptCache();
+  var cachedSheetData = cache.get("cached_sheet_data");
+  var values;
+  if (cachedSheetData) {
+    values = JSON.parse(cachedSheetData);
+  } else {
+    values = sheet.getDataRange().getValues(); // <--- ใช้ค่าเดิมในกรณีไม่มี cache
+    cache.put("cached_sheet_data", JSON.stringify(values), 21600); // 6 ชม.
+  }
+  // ✅✅ จบส่วน Cache
+
+  // กรองข้อมูลที่ตรงกับ userMsg
+  var filteredData = values.filter(row => row[0] === userMsg);
+
+  // ถ้าไม่พบข้อมูล ให้ตรวจสอบรูปแบบข้อความและส่งข้อความตอบกลับ
+  if (filteredData.length === 0) {
+    if (/^D\d+$/.test(userMsg)) { // ตรวจสอบว่าข้อความเป็นรูปแบบ "Dxxxxx"
+      return ContentService.createTextOutput(JSON.stringify({
+        "fulfillmentMessages": [
+          {
+            "platform": "line",
+            "type": 4,
+            "payload": {
+              "line": {
+                "type": "text",
+                "text": `⚠️ ไม่พบข้อมูลยางสำหรับหมายเลข "${userMsg}" ⚠️\nกรุณาลองใหม่อีกครั้งครับ`
+              }
+            }
+          }
+        ]
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // ถ้าไม่ใช่ข้อความในรูปแบบ "Dxxxxx" จะไม่ตอบกลับ
+    return ContentService.createTextOutput("");
+  }
+
+  // ใช้ Map เพื่อจัดกลุ่มข้อมูลตามเบอร์ยาง
+  var groupedData = new Map();
+  filteredData.forEach(row => {
+    var tireName = row[2];
+    if (!groupedData.has(tireName)) {
+      groupedData.set(tireName, []);
+    }
+    groupedData.get(tireName).push({
+      Data1: row[1], // ยี่ห้อ
+      Data2: row[3], // รุ่นยาง
+      Data3: Math.floor(row[4]), // ราคา
+      Data4: row[5], // Dot ยาง
+      Data5: row[6], // จำนวนยาง
+      Data6: row[7]  // หมายเหตุ
+    });
+  });
+
+  var bubbles = [];
+
+  // สร้าง Bubble สำหรับแต่ละกลุ่ม
+  for (let [tireName, details] of groupedData) {
+    // จัดรูปแบบข้อมูลย่อย
+    var detailBoxes = details.map(detail => ({
+      "type": "box",
+      "layout": "vertical",
+      "margin": "md",
+      "contents": [
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "contents": [
+            { "type": "text", "text": "รุ่นยาง", "size": "sm", "color": "#7F7F7F" },
+            { "type": "text", "text": detail.Data2, "align": "end", "weight": "bold", "color": "#FF0000", "size": "sm" }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "contents": [
+            { "type": "text", "text": "ราคายาง", "size": "sm", "color": "#7F7F7F" },
+            { "type": "text", "text": detail.Data3 + " บาท", "align": "end", "size": "sm" }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "contents": [
+            { "type": "text", "text": "จำนวนยาง", "size": "sm", "color": "#7F7F7F" },
+            { "type": "text", "text": "(" + detail.Data4 + ") " + detail.Data5 + " เส้น", "align": "end", "size": "sm" }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "contents": [
+            { "type": "text", "text": "โปรโมชั่นลดเเล้ว", "size": "sm", "color": "#7F7F7F" },
+            { "type": "text", "text": detail.Data6 + " บาท", "align": "end", "color": "#FF0000", "size": "sm" }
+          ]
+        },
+        { "type": "separator", "margin": "md" }
+      ]
+    }));
+
+    // แบ่งข้อมูลย่อยเป็นกลุ่มละ 7 รายการ
+    var chunkedDetails = chunkArray(detailBoxes, 7);
+    chunkedDetails.forEach(chunk => {
+      bubbles.push({
+        "type": "bubble",
+        "header": { 
+          "type": "box",
+          "layout": "vertical",
+          "height": "100px",
+          "contents": [
+            {
+              "type": "image",
+              "url": "https://img5.pic.in.th/file/secure-sv1/Cover-1-Use55b3b7a7bd7e8764.png",
+              "gravity": "top",
+              "size": "full",
+              "aspectRatio": "3:1",
+              "aspectMode": "cover",
+              "backgroundColor": "#FFFFFFFF",
+              "position": "absolute",
+              "offsetTop": "0%",
+              "offsetBottom": "0%",
+              "offsetStart": "0%",
+              "offsetEnd": "0%"
+            },
+            {
+              "type": "text",
+              "text": userMsg,
+              "align": "start",
+              "weight": "bold",
+              "color": "#FFFFFFFF",
+              "margin": "md",
+              "size": "3xl",
+            }
+          ]
+        },
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": tireName,
+              "weight": "bold",
+              "size": "xl",
+              "align": "center",
+              "color": "#FF0000FF"
+            },
+            { "type": "separator", "margin": "md" },
+            ...chunk
+          ]
+        },
+        "footer": {
+          "type": "box",
+          "layout": "horizontal",
+          "spacing": "xs",
+          "paddingAll": "xs",
+          "contents": [
+            {
+              "type": "text",
+              "text": "ซื้อสดลด 2%",
+              "align": "start",
+              "gravity": "center",
+              "margin": "xl",
+              "size": "xs",
+              "color": "#7F7F7F",
+              "decoration": "underline"
+            },
+            {
+              "type": "image",
+              "url": "https://img5.pic.in.th/file/secure-sv1/Logo-Square.png",
+              "size": "sm",
+              "margin": "md",
+              "align": "end",
+              "aspectRatio": "10:7",
+              "aspectMode": "cover"
+            }
+          ]
+        }
+      });
+    });
+  }
+
+  // ส่ง Bubble ผ่าน LINE API
+  var result = {
+    "fulfillmentMessages": [
+      {
+        "platform": "line",
+        "type": 4,
+        "payload": {
+          "line": {
+            "type": "flex",
+            "altText": `ค้นหายาง ${userMsg} เสร็จแล้วครับ`,
+            "contents": {
+              "type": "carousel",
+              "contents": bubbles
+            }
+          }
+        }
+      }
+    ]
+  };
+
+  return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+}
+
+// ฟังก์ชันแบ่งข้อมูลเป็นกลุ่ม (chunk)
+function chunkArray(array, size) {
+  var result = [];
+  for (var i = 0; i < array.length; i += size) {
+    result.push(array.slice(i, i + size));
+  }
+  return result;
+}
