@@ -1,0 +1,52 @@
+{
+  "replyToken": "{{1.events[].replyToken}}",
+  "messages": [
+    {
+      "type": "flex",
+      "altText": "รายการยาง {{8.`1`}} ค้นหาเสร็จเเล้วครับ",
+      "contents": {
+        "type": "carousel",
+        "contents": [
+          {
+            "type": "bubble",
+            "body": {
+              "type": "box",
+              "layout": "vertical",
+              "spacing": "sm",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "ค้นหายางเบอร์ : {{8.`1`}}",
+                  "weight": "bold",
+                  "size": "md",
+                  "wrap": true
+                },
+                {
+                  "type": "text",
+                  "text": "แบรนด์ : {{8.`2`}}",
+                  "size": "sm",
+                  "color": "#555555",
+                  "wrap": true
+                },
+                {
+                  "type": "text",
+                  "text": "รุ่นยาง : {{8.`3`}}",
+                  "size": "sm",
+                  "color": "#555555",
+                  "wrap": true
+                },
+                {
+                  "type": "text",
+                  "text": "ราคาปกติ: {{8.`4`}} บาท",
+                  "size": "sm",
+                  "color": "#555555",
+                  "wrap": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
