@@ -1,0 +1,274 @@
+{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "image",
+            "url": "https://img5.pic.in.th/file/secure-sv1/Cover-1-Use55b3b7a7bd7e8764.png",
+            "aspectMode": "cover",
+            "margin": "none",
+            "size": "full",
+            "aspectRatio": "3:1",
+            "position": "absolute",
+            "offsetTop": "0%",
+            "offsetBottom": "0%",
+            "offsetStart": "0%",
+            "offsetEnd": "0%"
+          },
+          {
+            "type": "text",
+            "text": "215/60/15",
+            "margin": "md",
+            "size": "3xl",
+            "color": "#FFFFFFFF",
+            "align": "start",
+            "weight": "bold"
+          }
+        ],
+        "height": "100px"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "BRIDGESTONE",
+                "weight": "bold",
+                "color": "#FF0000",
+                "size": "xxl",
+                "align": "center"
+              },
+              {
+                "type": "separator",
+                "margin": "xxl"
+              }
+            ],
+            "spacing": "none",
+            "height": "65px"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "รุ่นยาง",
+                        "align": "start",
+                        "size": "sm"
+                      },
+                      {
+                        "type": "text",
+                        "text": "EP150",
+                        "align": "end",
+                        "weight": "bold",
+                        "color": "#FF0000",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "ราคา (ปกติ)",
+                        "align": "start",
+                        "size": "sm"
+                      },
+                      {
+                        "type": "text",
+                        "text": "2,600 บาท",
+                        "align": "end",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "ราคา (โปรโมชั่น)",
+                        "align": "start",
+                        "size": "sm"
+                      },
+                      {
+                        "type": "text",
+                        "text": "ไม่มีส่วนลด บาท",
+                        "align": "end",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "จำนวนยาง",
+                        "align": "start",
+                        "size": "sm"
+                      },
+                      {
+                        "type": "text",
+                        "text": "(18/25) 8+ เส้น",
+                        "align": "end",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "md"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "รุ่นยาง",
+                            "align": "start",
+                            "size": "sm"
+                          },
+                          {
+                            "type": "text",
+                            "text": "EP150",
+                            "align": "end",
+                            "weight": "bold",
+                            "color": "#FF0000",
+                            "size": "sm"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "ราคา (ปกติ)",
+                            "align": "start",
+                            "size": "sm"
+                          },
+                          {
+                            "type": "text",
+                            "text": "2,600 บาท",
+                            "align": "end",
+                            "size": "sm"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "ราคา (โปรโมชั่น)",
+                            "align": "start",
+                            "size": "sm"
+                          },
+                          {
+                            "type": "text",
+                            "text": "ไม่มีส่วนลด บาท",
+                            "align": "end",
+                            "size": "sm"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "จำนวนยาง",
+                            "align": "start",
+                            "size": "sm"
+                          },
+                          {
+                            "type": "text",
+                            "text": "(18/25) 8+ เส้น",
+                            "align": "end",
+                            "size": "sm"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "separator",
+                        "margin": "md"
+                      }
+                    ]
+                  }
+                ],
+                "spacing": "none"
+              }
+            ],
+            "spacing": "md"
+          }
+        ],
+        "offsetTop": "0%",
+        "offsetBottom": "5%",
+        "offsetStart": "0%",
+        "offsetEnd": "0%",
+        "spacing": "none"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "ซื้อสดลด 2%",
+            "gravity": "center",
+            "align": "start",
+            "size": "sm",
+            "offsetStart": "10px"
+          },
+          {
+            "type": "image",
+            "url": "https://img5.pic.in.th/file/secure-sv1/Logo-Square.png",
+            "size": "sm",
+            "margin": "md",
+            "align": "end",
+            "gravity": "center"
+          }
+        ],
+        "height": "50px"
+      },
+      "size": "mega"
+    }
+  ]
+}
